@@ -5,16 +5,18 @@ with open(json_file_path, 'r') as file:
     data = json.load(file)
 
 out = []
+rem_unit = 16
+scale = 1.6
 for annotation in data:
-    y, x = annotation['coords']
+    x, y = annotation['coords']
     contents = annotation['contents']
 
-    x_corrected = ((1600 - x) * 2) - 200
-    y_corrected = ((2000 - y) * 2) - 378
+    x_corrected = (x - 255) * scale
+    y_corrected = (1903 - y) * scale
 
     # Convert to REM
-    x_corrected = x_corrected / 16
-    y_corrected = y_corrected / 16
+    x_corrected = x_corrected / rem_unit
+    y_corrected = y_corrected / rem_unit
 
     out.append({
         "text": contents,
